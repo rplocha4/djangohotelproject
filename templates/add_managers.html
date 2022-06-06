@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/update_nav.css' %}">
+<form action="{% url 'booking:add_managers'%}" method="post">
+    {% csrf_token %}
+    {{form}}
+
+    <input type="submit" value="Submit">
+
+</form>
+
+
+
+{% endblock %}

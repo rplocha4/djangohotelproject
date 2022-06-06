@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/update_nav.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/customers.css' %}">
+
+<div class="body">
+
+    {% for customer in customers%}
+    <div class="data">
+        <p>Customer id: {{customer.id}}</p>
+
+        <p>Frist name: {{customer.first_name}}</p>
+        <p>Last name: {{customer.last_name}} </p>
+        <p>Email: {{customer.email}}</p>
+        <p>Phone Number: {{customer.phone_number}}</p>
+        <a style="width:80px;margin:5px;" class="btn btn-primary"
+            href="{% url 'booking:edit_customers' customer.id %}">edit</a>
+        <a style="width:80px;" class="btn btn btn-danger"
+            href="{% url 'booking:remove_customers' customer.id %}">delete</a>
+    </div>
+    {%endfor%}
+
+</div>
+
+
+{% endblock %}

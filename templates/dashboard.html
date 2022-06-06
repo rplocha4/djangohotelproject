@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/update_nav.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/customers.css' %}">
+<a class="btn btn-dark" href="{% url 'booking:customers' %}">View Customers</a>
+
+<a class="btn btn-dark" href="{% url 'booking:managers' %}">View Managers</a>
+{% comment %}
+<!-- <a class="btn btn-dark" href="{% url 'booking:rooms' %}">View Rooms</a>
+<a class="btn btn-dark" href="{% url 'booking:room_types' %}">View Room-Types</a>   --> {% endcomment %}
+
+
+
+{% endblock %}

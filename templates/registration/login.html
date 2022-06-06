@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+
+
+
+{% comment %} <form method="POST" action="{% url 'hotel:login' %}">
+  {% csrf_token %}
+
+  {{form.as_p}}
+
+
+  <input type="submit" value="Login" />
+
+</form> {% endcomment %}
+
+
+<form method="POST" action="{% url 'hotel:login' %}">
+  {% csrf_token %}
+  <div class="form-box">
+
+    <div class="header-text">
+      Login
+    </div>
+    {{form.username}}
+    {{form.password}}
+    <button type="submit" value="Submit">Submit</button>
+  </div>
+
+
+
+  {% endblock content %}

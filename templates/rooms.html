@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/update_nav.css' %}">
+<form action="{% url 'booking:rooms' room.id %}" method="post">
+    {% csrf_token %}
+    {{form}}
+
+    <input type="submit" value="Submit">
+
+</form>
+
+{% endblock %}

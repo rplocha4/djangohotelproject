@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+{% load extras %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+<script src="{% static 'js/home.js' %}"></script>
+<script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+<link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+<div class="body">
+
+
+
+
+  <div class="header">
+    <img src="{% static 'imgs/hotel-generic.jpg'%}" style='height: 100%; width: 100%; ' />
+    <div class=" text">Welcome to Hotel Elite</div>
+
+  </div>
+
+  <div class="main">
+
+    <div class="filter" style="height:auto;width:300px">
+      <form method="post" action="{% url 'booking:filters' %}">
+        {% csrf_token %}
+
+        <div class="filter-box">
+
+          <p class="filter-item"> Show only available rooms: <label class="switch">
+              {{form.show_only_available}}
+              <span class="slider round"></span>
+            </label> </p>
+          <p class="filter-item"> Min price: {{form.min_price}} </p>
+          <p class="filter-item"> Max price: {{form.max_price}} </p>
+          <p class="filter-item"> Min beds: {{form.beds}} </p>
+          <p class="filter-item"> Min size: {{form.size}} </p>
+          <button class="btn btn-success" type=" submit" value="Submit">Apply</button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+    <div class="rooms">
+
+      {%if rooms %}
+      {% for room in rooms %}
+      {%if not room.occupancy%}
+      <div class="grid">
+        <div>
+          <img class="room-img" src='{{MEDIA_ROOT}}{{ room.img.url }}'
+            style="width:300px; height:150px; margin-left:50px;margin-right:50px;">
+        </div>
+        <div class="content" style="width:400px;">
+
+          <p class="room-name">{{room.name}}</p>
+
+          <i class="fa-solid fa-check"></i> Available
+
+          <br>
+          <i class="fa-solid fa-bed"></i>&nbsp{{room.room_type.beds}} beds
+          <br>
+          <i class="bi bi-aspect-ratio"></i>&nbsp {{room.size}}m^2
+
+          <br>
+          <i class="fa-duotone fa-plus"></i> &nbsp{{room.accesories}}
+
+        </div>
+        <div style="text-align: center; margin-right:30px">
+          ${{room.room_type.price}}
+          <br>
+          {% if not user.is_superuser and not user.is_staff %}
+          <a class="booking-room btn btn-success" style="width:130px;margin-top:10px"
+            href="{% url 'booking:rooms' room.id %}">Book
+            Room</a>
+          {%endif%}
+          <br>
+          {% if user.is_superuser or user.is_staff %}
+          <a class="btn btn-danger" style="width:130px;" href="{% url 'booking:remove_room' room.id %}">Remove room</a>
+          <br>
+          <a class="btn btn-primary" style="width:130px;margin-top:10px"
+            href="{% url 'booking:edit_room' room.id %}">Edit room</a>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+
+      {%if bookings %}
+      {% for booking in bookings %}
+      {%if booking.room.occupancy%}
+      <div class="grid">
+        <div>
+          <img class="room-img" src='{{MEDIA_ROOT}}{{ booking.room.img.url }}'
+            style="width:300px; height:150px; margin-left:50px;margin-right:50px;">
+        </div>
+        <div class="content" style="width:400px;">
+
+          <p class="room-name">{{room.name}}</p>
+
+
+          <i class="fa-duotone fa-x"></i> Not available untill {{booking.date_to}}
+
+          <br>
+          <i class="fa-solid fa-bed"></i>&nbsp{{booking.room.room_type.beds}} beds
+          <br>
+          <i class="bi bi-aspect-ratio"></i>&nbsp {{booking.room.size}}m^2
+
+          <br>
+          <i class="fa-duotone fa-plus"></i> &nbsp{{booking.room.accesories}}
+
+        </div>
+        <div style="text-align: center; margin-right:30px">
+          ${{booking.room.room_type.price}}
+          <br>
+          {% if not user.is_superuser and not user.is_staff %}
+          <a class="booking-room btn btn-success"
+            style="width:130px;pointer-events: none;cursor: default; opacity: .6; margin-top:10px"
+            href="{% url 'booking:rooms' booking.room.id %}">Book Room</a>
+          {%endif%}
+          <br>
+          {% if user.is_superuser or user.is_staff %}
+          <a class="btn btn-danger" style="width:130px;" href="{% url 'booking:remove_room' booking.room.id %}">Remove
+            room</a>
+          <br>
+          <a class="btn btn-primary" style="width:130px;margin-top:10px"
+            href="{% url 'booking:edit_room' booking.room.id %}">Edit
+            room</a>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+
+      {% endfor %}
+
+      {% endif %}
+
+
+      {% endif %}
+      {% if user.is_superuser or user.is_staff %}
+      <a class="btn btn-dark add-room" href="{% url 'booking:new_room' %}">Add room</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="footer">
+
+
+  </div>
+
+</div>
+
+{% endblock content %}
