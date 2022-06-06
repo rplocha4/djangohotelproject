@@ -11,9 +11,16 @@ from phonenumber_field.formfields import PhoneNumberField
 class BookingForm(forms.Form):
     date_from = forms.DateField(
         initial=datetime.date.today,
-        widget=forms.SelectDateWidget(),
+        widget=AdminDateWidget(
+            attrs={"class": "date-field", "data-date-format": "dd/mm/yyyy"}
+        ),
     )
-    date_to = forms.DateField(widget=forms.SelectDateWidget())
+    date_to = forms.DateField(
+        initial=datetime.date.today,
+        widget=AdminDateWidget(
+            attrs={"class": "date-field", "data-date-format": "dd/mm/yyyy"}
+        ),
+    )
 
 
 class AddRoom(ModelForm):

@@ -17,19 +17,19 @@ from .views import (
     edit_manager,
     filters,
     dashboard,
-    rooms,
+    book_rooms,
 )
 
 app_name = "booking"
 urlpatterns = (
     [
         path("", home, name="home"),
-        path("room/<int:id>/", rooms, name="rooms"),
+        path("rooms", rooms, name="rooms"),
         path("new_room/", new_room, name="new_room"),
         path("remove_room/<int:id>", remove_room, name="remove_room"),
         path("room/<int:id>/edit", edit_room, name="edit_room"),
         path("customers/", customers, name="customers"),
-        path("rooms/", rooms, name="rooms"),
+        path("book_rooms/<int:id>/", book_rooms, name="book_rooms"),
         path("customers/<int:id>/edit", edit_customers, name="edit_customers"),
         path("remove_customers/<int:id>", remove_customers, name="remove_customers"),
         path("managers/", managers, name="managers"),

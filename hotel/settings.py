@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "booking",
     "phonenumber_field",
     "fontawesomefree",
+    "bootstrap_datepicker_plus",
 ]
 
 MIDDLEWARE = [

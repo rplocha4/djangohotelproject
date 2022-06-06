@@ -99,7 +99,7 @@ def filters(request):
     )
 
 
-def rooms(request, id):
+def book_rooms(request, id):
     room = Room.objects.get(pk=id)
 
     if request.method == "POST":
