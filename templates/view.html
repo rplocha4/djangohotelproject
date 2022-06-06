@@ -5,62 +5,69 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/update_nav.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/view.css' %}">
+
 <div class="body">
 
+    <div class="table">
+        {% if managers or add_manager%}
+        {% for manager in managers%}
+        <div class="data">
+            <p>Manager id: {{manager.id}}</p>
+            <p>Username: {{manager.username}}</p>
+            <p>Frist name: {{manager.first_name}}</p>
+            <p>Last name: {{manager.last_name}} </p>
+            <p>Email: {{manager.email}}</p>
+            <p>Phone Number: {{manager.phone_number}}</p>
 
-    {% if managers or add_manager%}
-    {% for manager in managers%}
-    <div class="data">
-        <p>Manager id: {{manager.id}}</p>
-        <p>Username: {{manager.username}}</p>
-        <p>Frist name: {{manager.first_name}}</p>
-        <p>Last name: {{manager.last_name}} </p>
-        <p>Email: {{manager.email}}</p>
-        <p>Phone Number: {{manager.phone_number}}</p>
+            <a style="width:80px;" class="btn btn-primary edit-delete-btn"
+                href="{% url 'booking:edit_manager' manager.id %}">edit</a>
+            <a style="width:80px;" class="btn btn btn-danger edit-delete-btn"
+                href="{% url 'booking:remove_manager' manager.id %}">delete</a>
 
-        <a style="width:80px;margin:5px;" class="btn btn-primary"
-            href="{% url 'booking:edit_manager' manager.id %}">edit</a>
-        <a style="width:80px;" class="btn btn btn-danger"
-            href="{% url 'booking:remove_manager' manager.id %}">delete</a>
+        </div>
+        {%endfor%}
 
+        <a class="btn btn btn-success" href="{% url 'booking:add_managers' %}">Add
+            Manager</a>
     </div>
-    {%endfor%}
-
-    <a style="width:80px;height:60px;position: relative; top: 200px;" class="btn btn btn-danger"
-        href="{% url 'booking:add_managers' %}">Add
-        Manager</a>
-
     {%endif%}
+    <div class="table">
+        {% for customer in customers%}
+        <div class="data">
+            <p>Customer id: {{customer.id}}</p>
 
-    {% for customer in customers%}
-    <div class="data">
-        <p>Customer id: {{customer.id}}</p>
-
-        <p>Frist name: {{customer.first_name}}</p>
-        <p>Last name: {{customer.last_name}} </p>
-        <p>Email: {{customer.email}}</p>
-        <p>Phone Number: {{customer.phone_number}}</p>
-        <a style="width:80px;margin:5px;" class="btn btn-primary"
-            href="{% url 'booking:edit_customers' customer.id %}">edit</a>
-        <a style="width:80px;" class="btn btn btn-danger"
-            href="{% url 'booking:remove_customers' customer.id %}">delete</a>
+            <p>Frist name: {{customer.first_name}}</p>
+            <p>Last name: {{customer.last_name}} </p>
+            <p>Email: {{customer.email}}</p>
+            <p>Phone Number: {{customer.phone_number}}</p>
+            <a style="width:80px;" class="btn btn-primary edit-delete-btn"
+                href="{% url 'booking:edit_customers' customer.id %}">edit</a>
+            <a style="width:80px;" class="btn btn btn-danger edit-delete-btn"
+                href="{% url 'booking:remove_customers' customer.id %}">delete</a>
+        </div>
+        {%endfor%}
     </div>
-    {%endfor%}
+    <div class="table">
+        {% if add_room %}
+        {% for room in rooms%}
+        <div class="data">
+            <p>Room id: {{room.id}}</p>
 
-
-    {% for room in rooms%}
-    <div class="data">
-        <p>Room id: {{room.id}}</p>
-
-        <p>Room name: {{room.name}}</p>
-        <p>Room type: {{room.room_type}} </p>
-        <p>Room img:: {{room.img}}</p>
-        <p>Room size: {{room.size}}</p>
-        <p>Room accesories: {{room.accesories}}</p>
-        <a style="width:80px;margin:5px;" class="btn btn-primary" href="{% url 'booking:edit_room' room.id %}">edit</a>
-        <a style="width:80px;" class="btn btn btn-danger" href="{% url 'booking:remove_room' room.id %}">delete</a>
+            <p>Room name: {{room.name}}</p>
+            <p>Room type: {{room.room_type}} </p>
+            <p>Room img: {{room.img}}</p>
+            <p>Room size: {{room.size}}</p>
+            <p>Room accesories: {{room.accesories}}</p>
+            <a style="width:80px;" class="btn btn-primary edit-delete-btn"
+                href="{% url 'booking:edit_room' room.id %}">edit</a>
+            <a style="width:80px;" class="btn btn btn-danger edit-delete-btn"
+                href="{% url 'booking:remove_room_from_dashboard' room.id %}">delete</a>
+        </div>
+        {%endfor%}
+        <a style="width:80px;height:60px;" class="btn btn btn-success" href="{% url 'booking:new_room' %}">Add
+            Room</a>
+        {%endif%}
     </div>
-    {%endfor%}
 
 </div>
 

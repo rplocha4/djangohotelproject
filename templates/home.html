@@ -22,13 +22,14 @@
 
   <div class="main">
 
-    <div class="filter" style="height:auto;width:300px">
+    <div class="filter" style="height:500px;width:300px">
       <form method="post" action="{% url 'booking:filters' %}">
         {% csrf_token %}
 
         <div class="filter-box">
 
-          <p class="filter-item"> Show only available rooms: <label class="switch">
+          <p style="margin-top:20px;" class="filter-item"> Show only available rooms: <label style="margin-top:20px;"
+              class=" switch">
               {{form.show_only_available}}
               <span class="slider round"></span>
             </label> </p>

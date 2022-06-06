@@ -3,14 +3,20 @@
 {% block content %}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/update_nav.css' %}">
-<form action="{% url 'booking:new_room'%}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{form}}
+<link rel="stylesheet" type="text/css" href="{% static 'css/view.css' %}">
+<div class="add-room">
+    <form action="{% url 'booking:new_room'%}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% comment %} {{form}} {% endcomment %}
+        <p>Room name: {{form.name}}</p>
+        <p>Room type: {{form.room_type}} </p>
+        <p>Room img:: {{form.img}}</p>
+        <p>Room size: {{form.size}}</p>
+        <p>Room accesories: {{form.accesories}}</p>
+        <input class="btn btn-primary add_btn" type="submit" value="Submit">
 
-    <input type="submit" value="Submit">
-
-</form>
-
+    </form>
+</div>
 
 
 {% endblock %}

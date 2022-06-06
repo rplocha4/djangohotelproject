@@ -18,13 +18,14 @@ from .views import (
     filters,
     dashboard,
     book_rooms,
+    remove_room_from_dashboard,
 )
 
 app_name = "booking"
 urlpatterns = (
     [
         path("", home, name="home"),
-        path("rooms", rooms, name="rooms"),
+        path("rooms/", rooms, name="rooms"),
         path("new_room/", new_room, name="new_room"),
         path("remove_room/<int:id>", remove_room, name="remove_room"),
         path("room/<int:id>/edit", edit_room, name="edit_room"),
@@ -38,6 +39,11 @@ urlpatterns = (
         path("remove_manager/<int:id>", remove_manager, name="remove_manager"),
         path("filters/", filters, name="filters"),
         path("dashboard/", dashboard, name="dashboard"),
+        path(
+            "remove_room_from_dashboard/<int:id>",
+            remove_room_from_dashboard,
+            name="remove_room_from_dashboard",
+        ),
     ]
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

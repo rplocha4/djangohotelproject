@@ -151,6 +151,13 @@ def remove_room(request, id):
 
 
 @staff_member_required
+def remove_room_from_dashboard(request, id):
+    room = Room.objects.get(pk=id)
+    room.delete()
+    return redirect("booking:rooms")
+
+
+@staff_member_required
 def edit_room(request, id):
     room = Room.objects.get(pk=id)
 
@@ -175,7 +182,7 @@ def customers(request):
 @staff_member_required
 def rooms(request):
     rooms = Room.objects.all()
-    return render(request, "view.html", {"rooms": rooms})
+    return render(request, "view.html", {"rooms": rooms, "add_room": True})
 
 
 @staff_member_required

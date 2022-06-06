@@ -1,24 +1,23 @@
 .body{
     
     position: absolute;
-    width: 100%;
-    height: 100%;
+    width: 50%;
     display: flex;
-    flex-direction: row;
-    margin-top: 100px;
+    flex-direction: column;
 }
 
 .data{
     display: flex;
     flex-direction: column;
     margin: 20px;
-    height: 600px;
-    align-items: center ;
+    height: 550px;
+    align-items: center;
     border-radius: 10px;
     -webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
     -moz-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
     box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
 }
+
 
 .edit-data{
     margin: 50px;
@@ -44,4 +43,29 @@ p{
 .header-item{
     font-size: 30px;
     text-align: center;
+}
+.add-room{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+    -webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+    box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+}
+.add_btn{
+    position: relative;
+    bottom: 10px;
+    left: 250px;
+}
+
+.edit-delete-btn{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.table{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
