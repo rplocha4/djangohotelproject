@@ -147,7 +147,7 @@ def edit_room(request, id):
 @staff_member_required
 def customers(request):
     customers = Customer.objects.all()
-    return render(request, "customers.html", {"customers": customers})
+    return render(request, "view.html", {"customers": customers})
 
 
 @staff_member_required
@@ -209,7 +209,7 @@ def add_manager(request):
 @staff_member_required
 def managers(request):
     managers = Manager.objects.all()
-    return render(request, "managers.html", {"managers": managers})
+    return render(request, "view.html", {"managers": managers, "add_manager": True})
 
 
 @staff_member_required
