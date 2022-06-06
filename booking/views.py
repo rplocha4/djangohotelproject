@@ -6,10 +6,32 @@ from accounts.models import Customer, Manager
 from .forms import BookingForm, AddRoom, EditCustomer, FilterForm
 from accounts.forms import SignUpForm, CreateManager
 from django.contrib.auth.models import User
-from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.admin.views.decorators import (
+    staff_member_required,
+)
 from django.db.models import Q
 
-# from accounts.forms import CreateManager
+from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.contrib.admin.views.decorators import user_passes_test
+
+
+def superuser_required(
+    view_func=None,
+    redirect_field_name=REDIRECT_FIELD_NAME,
+    login_url="account_login_url",
+):
+    """
+    Decorator for views that checks that the user is logged in and is a
+    superuser, redirecting to the login page if necessary.
+    """
+    actual_decorator = user_passes_test(
+        lambda u: u.is_active and u.is_superuser,
+        login_url=login_url,
+        redirect_field_name=redirect_field_name,
+    )
+    if view_func:
+        return actual_decorator(view_func)
+    return actual_decorator
 
 
 # Create your views here.
@@ -141,13 +163,19 @@ def edit_room(request, id):
     else:
         form = AddRoom(instance=room)
 
-    return render(request, "edit.html", {"form": form})
+    return render(request, "edit.html", {"form": form, "id": room.id, "edit": "Room"})
 
 
 @staff_member_required
 def customers(request):
     customers = Customer.objects.all()
     return render(request, "view.html", {"customers": customers})
+
+
+@staff_member_required
+def rooms(request):
+    rooms = Room.objects.all()
+    return render(request, "view.html", {"rooms": rooms})
 
 
 @staff_member_required
@@ -162,7 +190,9 @@ def edit_customers(request, id):
     else:
         form = EditCustomer(instance=customer)
 
-    return render(request, "edit.html", {"form": form})
+    return render(
+        request, "edit.html", {"form": form, "id": customer.id, "edit": "Customer"}
+    )
 
 
 @staff_member_required
@@ -224,7 +254,9 @@ def edit_manager(request, id):
     else:
         form = EditCustomer(instance=manager)
 
-    return render(request, "edit.html", {"form": form})
+    return render(
+        request, "edit.html", {"form": form, "id": manager.id, "edit": "Manager"}
+    )
 
 
 @staff_member_required
@@ -234,3 +266,8 @@ def remove_manager(request, id):
     u.delete()
     manager.delete()
     return redirect("booking:managers")
+
+
+@superuser_required
+def dashboard(request):
+    return render(request, "dashboard.html")

@@ -58,6 +58,7 @@
     -webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
     -moz-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
     box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+    border-radius: 10px;
 
 }
 .filter{
@@ -96,6 +97,10 @@
     height: 100px;
     
 }
+.content{
+    border-radius: 10px;
+
+}
 
 .body{
     background-color: yellow;
@@ -107,6 +112,12 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border-radius: 10px;
+
+}
+.filter{
+    border-radius: 10px;
+
 }
 
 /* The switch - the box around the slider */

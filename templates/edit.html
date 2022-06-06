@@ -3,13 +3,19 @@
 {% block content %}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/update_nav.css' %}">
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{form.as_p}}
+<link rel="stylesheet" type="text/css" href="{% static 'css/view.css' %}">
 
-    <input type="submit" value="Submit">
-</form>
+<div class="data edit-data">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p class="header-item">Editing {{edit}} id {{id}}</p>
 
+        {{form.as_p}}
+
+        <input class="btn btn-success edit-btn" type="submit" value="Submit">
+        <a class="btn btn-primary edit-btn" href=" {% url 'booking:dashboard' %}">Cancel</a>
+    </form>
+</div>
 
 
 {% endblock %}

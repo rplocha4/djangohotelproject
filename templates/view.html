@@ -4,13 +4,13 @@
 {% load static %}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/update_nav.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'css/customers.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/view.css' %}">
 <div class="body">
 
 
     {% if managers or add_manager%}
     {% for manager in managers%}
-    <div class="data" style="height:400px;">
+    <div class="data">
         <p>Manager id: {{manager.id}}</p>
         <p>Username: {{manager.username}}</p>
         <p>Frist name: {{manager.first_name}}</p>
@@ -47,6 +47,20 @@
     </div>
     {%endfor%}
 
+
+    {% for room in rooms%}
+    <div class="data">
+        <p>Room id: {{room.id}}</p>
+
+        <p>Room name: {{room.name}}</p>
+        <p>Room type: {{room.room_type}} </p>
+        <p>Room img:: {{room.img}}</p>
+        <p>Room size: {{room.size}}</p>
+        <p>Room accesories: {{room.accesories}}</p>
+        <a style="width:80px;margin:5px;" class="btn btn-primary" href="{% url 'booking:edit_room' room.id %}">edit</a>
+        <a style="width:80px;" class="btn btn btn-danger" href="{% url 'booking:remove_room' room.id %}">delete</a>
+    </div>
+    {%endfor%}
 
 </div>
 
