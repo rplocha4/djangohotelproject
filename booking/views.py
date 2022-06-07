@@ -1,9 +1,15 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-
-from .models import Room, Booking
+from datetime import date
+from .models import Room, Booking, Payment
 from accounts.models import Customer, Manager
-from .forms import BookingForm, AddRoom, EditCustomer, FilterForm
+from .forms import (
+    BookingForm,
+    AddRoom,
+    EditCustomer,
+    FilterForm,
+    PaymentForm,
+)
 from accounts.forms import SignUpForm, CreateManager
 from django.contrib.auth.models import User
 from django.contrib.admin.views.decorators import (
@@ -13,6 +19,7 @@ from django.db.models import Q
 
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.admin.views.decorators import user_passes_test
+import time
 
 
 def superuser_required(
@@ -122,11 +129,40 @@ def book_rooms(request, id):
                 room.occupancy = True
                 room.save()
                 new_booking.save()
-                return redirect("booking:home")
+
+                to_pay = int((date_to - date_from).days * room.room_type.price)
+                return redirect("booking:payment", to_pay=to_pay, id=customer.id)
     else:
         form = BookingForm()
 
-    return render(request, "rooms.html", {"room": room, "form": form})
+    return render(request, "book_room.html", {"room": room, "form": form})
+
+
+def payment(request, to_pay, id):
+    customer = Customer.objects.get(pk=id)
+    if request.method == "POST":
+
+        form = PaymentForm(request.POST)
+        if form.is_valid():
+            cc_number = form.cleaned_data["cc_number"]
+            cc_expiry = form.cleaned_data["cc_expiry"]
+            cc_code = form.cleaned_data["cc_code"]
+            today = date.today()
+            new_payment = Payment(
+                cc_number=cc_number,
+                cc_expiry=cc_expiry,
+                cc_code=cc_code,
+                customer=customer,
+                date=today,
+                amount=to_pay,
+            )
+            new_payment.save()
+            redirect("booking:home")
+
+    else:
+        form = PaymentForm()
+
+    return render(request, "payment.html", {"form1": form, "to_pay": to_pay})
 
 
 @staff_member_required
@@ -176,7 +212,7 @@ def edit_room(request, id):
 @staff_member_required
 def customers(request):
     customers = Customer.objects.all()
-    return render(request, "view.html", {"customers": customers})
+    return render(request, "view.html", {"customers": customers, "customer": True})
 
 
 @staff_member_required

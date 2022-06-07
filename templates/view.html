@@ -26,11 +26,18 @@
 
         </div>
         {%endfor%}
-
-        <a class="btn btn btn-success" href="{% url 'booking:add_managers' %}">Add
+        {% if managers %}
+        <a style="width:80px;height:60px;" class="btn btn btn-success" href="{% url 'booking:new_room' %}">Add
             Manager</a>
+        {%else%}
+        <a class="btn btn btn-success" style="position: absolute;top:50%;left:45%"
+            href="{% url 'booking:add_managers' %}">Add
+            Manager</a>
+        {%endif%}
+
     </div>
     {%endif%}
+    {% if customer %}
     <div class="table">
         {% for customer in customers%}
         <div class="data">
@@ -47,8 +54,10 @@
         </div>
         {%endfor%}
     </div>
+    {%endif%}
+    {% if add_room %}
     <div class="table">
-        {% if add_room %}
+
         {% for room in rooms%}
         <div class="data">
             <p>Room id: {{room.id}}</p>
@@ -64,10 +73,18 @@
                 href="{% url 'booking:remove_room_from_dashboard' room.id %}">delete</a>
         </div>
         {%endfor%}
+        {% if rooms %}
         <a style="width:80px;height:60px;" class="btn btn btn-success" href="{% url 'booking:new_room' %}">Add
+            Room</a>
+        {%else%}
+        <a style="width:80px;height:60px;position: absolute;top:50%;left:45%" class="btn btn btn-success"
+            href="{% url 'booking:new_room' %}">Add
             Room</a>
         {%endif%}
     </div>
+
+    {%endif%}
+
 
 </div>
 

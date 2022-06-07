@@ -19,6 +19,7 @@ from .views import (
     dashboard,
     book_rooms,
     remove_room_from_dashboard,
+    payment,
 )
 
 app_name = "booking"
@@ -44,6 +45,7 @@ urlpatterns = (
             remove_room_from_dashboard,
             name="remove_room_from_dashboard",
         ),
+        path("payment/to_pay<int:to_pay>/<int:id>", payment, name="payment"),
     ]
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

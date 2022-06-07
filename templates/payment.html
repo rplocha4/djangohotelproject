@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/update_nav.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/view.css' %}">
+<script type="text/javascript" src="{% static 'js/app.js' %}"></script>
+<form action="{% url 'booking:home'%}" method="post">
+    {% csrf_token %}
+
+    <div class="payment-box">
+        <h1>Amount to pay: ${{to_pay}} </h1>
+
+
+
+        <div class="payment d1">{{form1.as_p}}</div>
+
+
+        <button id="pay-btn" class=" btn btn-primary " style="margin-bottom: 20px;" type="submit">Pay</button>
+
+        <div id="lds-ring" class="lds-ring">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+
+    </div>
+
+
+</form>
+
+{% endblock %}

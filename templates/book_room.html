@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/update_nav.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/view.css' %}">
+
+<form action="{% url 'booking:book_rooms' room.id %}" method="post">
+    {% csrf_token %}
+
+    <div class="booking_box">
+        {{form.as_p}}
+        {{ form.media }}
+
+        <input class="btn btn-primary" style="margin-bottom: 20px;" type="submit" value="Submit">
+
+    </div>
+
+
+
+</form>
+
+{% endblock %}
