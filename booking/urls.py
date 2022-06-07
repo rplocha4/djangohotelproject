@@ -19,7 +19,11 @@ from .views import (
     dashboard,
     book_rooms,
     remove_room_from_dashboard,
-    payment,
+    view_payments,
+    view_bookings,
+    view_room_types,
+    remove_room_type,
+    edit_room_type,
 )
 
 app_name = "booking"
@@ -39,13 +43,17 @@ urlpatterns = (
         path("managers/<int:id>/edit", edit_manager, name="edit_manager"),
         path("remove_manager/<int:id>", remove_manager, name="remove_manager"),
         path("filters/", filters, name="filters"),
+        path("view_payments/", view_payments, name="view_payments"),
+        path("view_bookings/", view_bookings, name="view_bookings"),
         path("dashboard/", dashboard, name="dashboard"),
         path(
             "remove_room_from_dashboard/<int:id>",
             remove_room_from_dashboard,
             name="remove_room_from_dashboard",
         ),
-        path("payment/to_pay<int:to_pay>/<int:id>", payment, name="payment"),
+        path("view_room_types/", view_room_types, name="view_room_types"),
+        path("edit_room_type/<int:id>/edit", edit_room_type, name="edit_room_type"),
+        path("remove_room_type/<int:id>", remove_room_type, name="remove_room_type"),
     ]
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

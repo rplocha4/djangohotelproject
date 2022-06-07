@@ -27,63 +27,170 @@
         </div>
         {%endfor%}
         {% if managers %}
-        <a style="width:80px;height:60px;" class="btn btn btn-success" href="{% url 'booking:new_room' %}">Add
-            Manager</a>
-        {%else%}
-        <a class="btn btn btn-success" style="position: absolute;top:50%;left:45%"
+        <div> <a style="width:80px;height:60px;" class="btn btn btn-success" href="{% url 'booking:new_room' %}">Add
+                Manager</a>
+            <a style="width:80px;height:60px;" class="btn btn btn-dark" href="{% url 'booking:dashboard' %}">Go
+                Back</a></div>
+    </div>
+
+    {%else%}
+    <div>
+        <a class="btn btn btn-success" style="position: absolute;top:50%;left:40%"
             href="{% url 'booking:add_managers' %}">Add
             Manager</a>
-        {%endif%}
+        <a style="width:100px;height:40px;position:absolute;top:50%;left:50%" class="btn btn btn-dark"
+            href="{% url 'booking:dashboard' %}">Go
+            Back</a></div>
+</div>
+{%endif%}
 
+</div>
+{%endif%}
+{% if customer %}
+<div class="table">
+    {% for customer in customers%}
+    <div class="data">
+        <p>Customer id: {{customer.id}}</p>
+
+        <p>Frist name: {{customer.first_name}}</p>
+        <p>Last name: {{customer.last_name}} </p>
+        <p>Email: {{customer.email}}</p>
+        <p>Phone Number: {{customer.phone_number}}</p>
+        <a style="width:80px;" class="btn btn-primary edit-delete-btn"
+            href="{% url 'booking:edit_customers' customer.id %}">edit</a>
+        <a style="width:80px;" class="btn btn btn-danger edit-delete-btn"
+            href="{% url 'booking:remove_customers' customer.id %}">delete</a>
     </div>
+    {%endfor%}
+    {% if customers %}
+    <a style="width:100px;height:40px;" class="btn btn btn-dark" href="{% url 'booking:dashboard' %}">Go
+        Back</a>
+    {%else%}
+    <a style="width:100px;height:40px;position:absolute;top:50%;left:45%" class="btn btn btn-dark"
+        href="{% url 'booking:dashboard' %}">Go
+        Back</a>
     {%endif%}
-    {% if customer %}
-    <div class="table">
-        {% for customer in customers%}
-        <div class="data">
-            <p>Customer id: {{customer.id}}</p>
+</div>
+</div>
+{%endif%}
+{% if add_room %}
+<div class="table">
 
-            <p>Frist name: {{customer.first_name}}</p>
-            <p>Last name: {{customer.last_name}} </p>
-            <p>Email: {{customer.email}}</p>
-            <p>Phone Number: {{customer.phone_number}}</p>
-            <a style="width:80px;" class="btn btn-primary edit-delete-btn"
-                href="{% url 'booking:edit_customers' customer.id %}">edit</a>
-            <a style="width:80px;" class="btn btn btn-danger edit-delete-btn"
-                href="{% url 'booking:remove_customers' customer.id %}">delete</a>
-        </div>
-        {%endfor%}
+    {% for room in rooms%}
+    <div class="data">
+        <p>Room id: {{room.id}}</p>
+
+        <p>Room name: {{room.name}}</p>
+        <p>Room type: {{room.room_type}} </p>
+        <p>Room img: {{room.img}}</p>
+        <p>Room size: {{room.size}}</p>
+        <p>Room accesories: {{room.accesories}}</p>
+        <a style="width:80px;" class="btn btn-primary edit-delete-btn"
+            href="{% url 'booking:edit_room' room.id %}">edit</a>
+        <a style="width:80px;" class="btn btn btn-danger edit-delete-btn"
+            href="{% url 'booking:remove_room_from_dashboard' room.id %}">delete</a>
     </div>
-    {%endif%}
-    {% if add_room %}
-    <div class="table">
-
-        {% for room in rooms%}
-        <div class="data">
-            <p>Room id: {{room.id}}</p>
-
-            <p>Room name: {{room.name}}</p>
-            <p>Room type: {{room.room_type}} </p>
-            <p>Room img: {{room.img}}</p>
-            <p>Room size: {{room.size}}</p>
-            <p>Room accesories: {{room.accesories}}</p>
-            <a style="width:80px;" class="btn btn-primary edit-delete-btn"
-                href="{% url 'booking:edit_room' room.id %}">edit</a>
-            <a style="width:80px;" class="btn btn btn-danger edit-delete-btn"
-                href="{% url 'booking:remove_room_from_dashboard' room.id %}">delete</a>
-        </div>
-        {%endfor%}
-        {% if rooms %}
-        <a style="width:80px;height:60px;" class="btn btn btn-success" href="{% url 'booking:new_room' %}">Add
+    {%endfor%}
+    {% if rooms %}
+    <div> <a style="width:80px;height:60px;" class="btn btn btn-success" href="{% url 'booking:new_room' %}">Add
             Room</a>
-        {%else%}
-        <a style="width:80px;height:60px;position: absolute;top:50%;left:45%" class="btn btn btn-success"
+        <a style="width:80px;height:60px;" class="btn btn btn-dark" href="{% url 'booking:dashboard' %}">Go Back</a>
+    </div>
+
+    {%else%}
+    <div>
+        <a style="width:80px;height:60px;position: absolute;top:50%;left:43%" class="btn btn btn-success"
             href="{% url 'booking:new_room' %}">Add
             Room</a>
-        {%endif%}
-    </div>
+        <a style="width:80px;height:60px;position:absolute;top:50%;left:50%" class="btn btn btn-dark"
+            href="{% url 'booking:dashboard' %}">Go
+            Back</a></div>
 
     {%endif%}
+</div>
+
+{%endif%}
+
+
+{% if view_payment %}
+<div class="table">
+
+    {% for payment in payments%}
+    <div style="height:auto;" class="data">
+        <p>Customer: {{payment.customer.first_name}} {{payment.customer.last_name}}</p>
+
+        <p>Payment date: {{payment.date}}</p>
+        <p>Payment amount: ${{payment.amount}} </p>
+
+
+    </div>
+    {%endfor%}
+    {%if payments%}
+    <a style="width:100px;height:40px" class="btn btn btn-dark" href="{% url 'booking:dashboard' %}">Go
+        Back</a>
+    {%else%}
+    <a style="width:100px;height:40px;position:absolute;top:50%;left:45%" class="btn btn btn-dark"
+        href="{% url 'booking:dashboard' %}">Go
+        Back</a>
+    {%endif%}
+</div>
+
+{%endif%}
+
+{% if view_bookings %}
+<div class="table">
+
+    {% for booking in bookings %}
+    <div style="height:auto;" class="data">
+        <p>Customer: {{booking.customer.first_name}} {{booking.customer.last_name}}</p>
+
+        <p>Room: {{booking.room.name}}</p>
+        <p>Booked from: {{booking.date_from}} </p>
+        <p>Booked to: {{booking.date_to}} </p>
+
+
+    </div>
+    {%endfor%}
+    {%if bookings%}
+    <a style="width:100px;height:40px" class="btn btn btn-dark" href="{% url 'booking:dashboard' %}">Go
+        Back</a>
+    {%else%}
+    <a style="width:100px;height:40px;position:absolute;top:50%;left:45%" class="btn btn btn-dark"
+        href="{% url 'booking:dashboard' %}">Go
+        Back</a>
+    {%endif%}
+</div>
+
+{%endif%}
+
+{% if view_room_types %}
+<div class="table">
+
+    {% for room_type in room_types %}
+    <div style="height:auto;" class="data">
+        <p>Room Type id: {{room_type.id}}</p>
+
+        <p>Price: {{room_type.price}}</p>
+
+        <p>Num of beds: {{room_type.beds}}</p>
+        <a style="width:80px;" class="btn btn-primary edit-delete-btn"
+            href="{% url 'booking:edit_room_type' room_type.id %}">edit</a>
+        <a style="width:80px;" class="btn btn btn-danger edit-delete-btn"
+            href="{% url 'booking:remove_room_type' room_type.id %}">delete</a>
+
+    </div>
+    {%endfor%}
+    {%if room_types%}
+    <a style="width:100px;height:40px" class="btn btn btn-dark" href="{% url 'booking:dashboard' %}">Go
+        Back</a>
+    {%else%}
+    <a style="width:100px;height:40px;position:absolute;top:50%;left:45%" class="btn btn btn-dark"
+        href="{% url 'booking:dashboard' %}">Go
+        Back</a>
+    {%endif%}
+</div>
+
+{%endif%}
 
 
 </div>

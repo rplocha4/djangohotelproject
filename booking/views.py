@@ -1,15 +1,8 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from datetime import date
-from .models import Room, Booking, Payment
+from .models import Room, Booking, Payment, Room_type
 from accounts.models import Customer, Manager
-from .forms import (
-    BookingForm,
-    AddRoom,
-    EditCustomer,
-    FilterForm,
-    PaymentForm,
-)
+from .forms import AddRoom, EditCustomer, FilterForm, BookingForm2, EditRoomType
 from accounts.forms import SignUpForm, CreateManager
 from django.contrib.auth.models import User
 from django.contrib.admin.views.decorators import (
@@ -20,6 +13,8 @@ from django.db.models import Q
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.admin.views.decorators import user_passes_test
 import time
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 
 
 def superuser_required(
@@ -111,7 +106,7 @@ def book_rooms(request, id):
 
     if request.method == "POST":
 
-        form = BookingForm(request.POST)
+        form = BookingForm2(request.POST)
 
         if form.is_valid():
             date_from = form.cleaned_data["date_from"]
@@ -120,49 +115,59 @@ def book_rooms(request, id):
 
             if current_user.is_authenticated:
                 customer = Customer.objects.get(username=current_user.username)
+                room.occupancy = True
+                room.save()
                 new_booking = Booking(
                     date_from=date_from,
                     date_to=date_to,
                     customer=customer,
                     room=room,
                 )
-                room.occupancy = True
-                room.save()
+
                 new_booking.save()
 
                 to_pay = int((date_to - date_from).days * room.room_type.price)
-                return redirect("booking:payment", to_pay=to_pay, id=customer.id)
+
+                cc_number = form["card_number"].value()
+                cc_expiry = form["card_expiry"].value()
+                cc_code = form["card_code"].value()
+                today = date.today()
+                new_payment = Payment(
+                    cc_number=cc_number,
+                    cc_expiry=cc_expiry,
+                    cc_code=cc_code,
+                    customer=customer,
+                    date=today,
+                    amount=to_pay,
+                )
+                new_payment.save()
+
+                return redirect("booking:home")
+
     else:
-        form = BookingForm()
+        form = BookingForm2()
 
     return render(request, "book_room.html", {"room": room, "form": form})
 
 
-def payment(request, to_pay, id):
-    customer = Customer.objects.get(pk=id)
-    if request.method == "POST":
+@staff_member_required
+def view_payments(request):
+    payments = Payment.objects.all()
+    return render(request, "view.html", {"payments": payments, "view_payment": True})
 
-        form = PaymentForm(request.POST)
-        if form.is_valid():
-            cc_number = form.cleaned_data["cc_number"]
-            cc_expiry = form.cleaned_data["cc_expiry"]
-            cc_code = form.cleaned_data["cc_code"]
-            today = date.today()
-            new_payment = Payment(
-                cc_number=cc_number,
-                cc_expiry=cc_expiry,
-                cc_code=cc_code,
-                customer=customer,
-                date=today,
-                amount=to_pay,
-            )
-            new_payment.save()
-            redirect("booking:home")
 
-    else:
-        form = PaymentForm()
+@staff_member_required
+def view_bookings(request):
+    bookings = Booking.objects.all()
+    return render(request, "view.html", {"bookings": bookings, "view_bookings": True})
 
-    return render(request, "payment.html", {"form1": form, "to_pay": to_pay})
+
+@staff_member_required
+def view_room_types(request):
+    room_types = Room_type.objects.all()
+    return render(
+        request, "view.html", {"room_types": room_types, "view_room_types": True}
+    )
 
 
 @staff_member_required
@@ -187,10 +192,34 @@ def remove_room(request, id):
 
 
 @staff_member_required
+def remove_room_type(request, id):
+    room_type = Room_type.objects.get(pk=id)
+    room_type.delete()
+    return redirect("booking:view_room_types")
+
+
+@staff_member_required
 def remove_room_from_dashboard(request, id):
     room = Room.objects.get(pk=id)
     room.delete()
     return redirect("booking:rooms")
+
+
+@staff_member_required
+def edit_room_type(request, id):
+    room_type = Room_type.objects.get(pk=id)
+    if request.method == "POST":
+
+        form = EditRoomType(request.POST, request.FILES, instance=room_type)
+        if form.is_valid():
+            form.save()
+            return redirect("booking:view_room_types")
+    else:
+        form = EditRoomType(instance=room_type)
+
+    return render(
+        request, "edit.html", {"form": form, "id": room_type.id, "edit": "Room_type"}
+    )
 
 
 @staff_member_required

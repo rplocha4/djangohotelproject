@@ -5,7 +5,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/update_nav.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/view.css' %}">
 <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
-<form action="{% url 'booking:home'%}" method="post">
+<form action="{% url 'booking:payment' to_pay id %}" method="post">
     {% csrf_token %}
 
     <div class="payment-box">
