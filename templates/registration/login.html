@@ -1,3 +1,5 @@
+<title>Login</title>
+
 {% extends "base.html" %}
 
 
@@ -28,6 +30,7 @@
     </div>
     {{form.username}}
     {{form.password}}
+    <a href=" {% url 'hotel:password_reset' %}">Forgot password?</a>
     <button type="submit" value="Submit">Submit</button>
   </div>
 

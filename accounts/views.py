@@ -3,6 +3,23 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from accounts.forms import SignUpForm
 from .models import Customer
+from django.urls import reverse_lazy
+from django.contrib.auth.views import PasswordResetView
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.forms import PasswordResetForm
+
+
+class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
+    template_name = "registration/password_reset.html"
+    email_template_name = "registration/password_reset_email.html"
+    subject_template_name = "registration/password_reset_subject"
+    success_message = (
+        "We've emailed you instructions for setting your password, "
+        "if an account exists with the email you entered. You should receive them shortly."
+        " If you don't receive an email, "
+        "please make sure you've entered the address you registered with, and check your spam folder."
+    )
+    success_url = reverse_lazy("booking:home")
 
 
 def signup(request):
@@ -29,9 +46,7 @@ def signup(request):
     return render(request, "registration/signup.html", {"form": form})
 
 
-def dashboard(request):
-    customers = Customer.objects.all()
+# def dashboard(request):
+#     customers = Customer.objects.all()
 
-    return render(request, "dashboard.html", {"customers": customers})
-
-
+#     return render(request, "dashboard.html", {"customers": customers})

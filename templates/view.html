@@ -1,6 +1,8 @@
 {% extends "base.html" %}
+{% block title %}View{% endblock %}
 
 {% block content %}
+
 {% load static %}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/update_nav.css' %}">
@@ -27,7 +29,7 @@
         </div>
         {%endfor%}
         {% if managers %}
-        <div> <a style="width:80px;height:60px;" class="btn btn btn-success" href="{% url 'booking:new_room' %}">Add
+        <div> <a style="width:80px;height:60px;" class="btn btn btn-success" href="{% url 'booking:add_managers' %}">Add
                 Manager</a>
             <a style="width:80px;height:60px;" class="btn btn btn-dark" href="{% url 'booking:dashboard' %}">Go
                 Back</a></div>

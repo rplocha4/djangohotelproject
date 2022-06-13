@@ -150,19 +150,19 @@ def book_rooms(request, id):
     return render(request, "book_room.html", {"room": room, "form": form})
 
 
-@staff_member_required
+@staff_member_required(login_url="hotel:login")
 def view_payments(request):
     payments = Payment.objects.all()
     return render(request, "view.html", {"payments": payments, "view_payment": True})
 
 
-@staff_member_required
+@staff_member_required(login_url="hotel:login")
 def view_bookings(request):
     bookings = Booking.objects.all()
     return render(request, "view.html", {"bookings": bookings, "view_bookings": True})
 
 
-@staff_member_required
+@staff_member_required(login_url="hotel:login")
 def view_room_types(request):
     room_types = Room_type.objects.all()
     return render(
@@ -170,7 +170,7 @@ def view_room_types(request):
     )
 
 
-@staff_member_required
+@staff_member_required(login_url="hotel:login")
 def new_room(request):
     if request.method == "POST":
 
@@ -184,28 +184,28 @@ def new_room(request):
     return render(request, "add_room.html", {"form": form})
 
 
-@staff_member_required
+@staff_member_required(login_url="hotel:login")
 def remove_room(request, id):
     room = Room.objects.get(pk=id)
     room.delete()
     return redirect("booking:home")
 
 
-@staff_member_required
+@staff_member_required(login_url="hotel:login")
 def remove_room_type(request, id):
     room_type = Room_type.objects.get(pk=id)
     room_type.delete()
     return redirect("booking:view_room_types")
 
 
-@staff_member_required
+@staff_member_required(login_url="hotel:login")
 def remove_room_from_dashboard(request, id):
     room = Room.objects.get(pk=id)
     room.delete()
     return redirect("booking:rooms")
 
 
-@staff_member_required
+@staff_member_required(login_url="hotel:login")
 def edit_room_type(request, id):
     room_type = Room_type.objects.get(pk=id)
     if request.method == "POST":
@@ -222,7 +222,7 @@ def edit_room_type(request, id):
     )
 
 
-@staff_member_required
+@staff_member_required(login_url="hotel:login")
 def edit_room(request, id):
     room = Room.objects.get(pk=id)
 
@@ -238,19 +238,19 @@ def edit_room(request, id):
     return render(request, "edit.html", {"form": form, "id": room.id, "edit": "Room"})
 
 
-@staff_member_required
+@staff_member_required(login_url="hotel:login")
 def customers(request):
     customers = Customer.objects.all()
     return render(request, "view.html", {"customers": customers, "customer": True})
 
 
-@staff_member_required
+@staff_member_required(login_url="hotel:login")
 def rooms(request):
     rooms = Room.objects.all()
     return render(request, "view.html", {"rooms": rooms, "add_room": True})
 
 
-@staff_member_required
+@staff_member_required(login_url="hotel:login")
 def edit_customers(request, id):
     customer = Customer.objects.get(pk=id)
     if request.method == "POST":
@@ -267,7 +267,7 @@ def edit_customers(request, id):
     )
 
 
-@staff_member_required
+@staff_member_required(login_url="hotel:login")
 def remove_customers(request, id):
     customer = Customer.objects.get(pk=id)
     u = User.objects.get(username=customer.username)
@@ -276,7 +276,7 @@ def remove_customers(request, id):
     return redirect("booking:customers")
 
 
-@staff_member_required
+@staff_member_required(login_url="hotel:login")
 def add_manager(request):
     if request.method == "POST":
         form = SignUpForm(request.POST)
@@ -308,13 +308,13 @@ def add_manager(request):
     return render(request, "registration/signup.html", {"form": form, "manager": True})
 
 
-@staff_member_required
+@staff_member_required(login_url="hotel:login")
 def managers(request):
     managers = Manager.objects.all()
     return render(request, "view.html", {"managers": managers, "add_manager": True})
 
 
-@staff_member_required
+@staff_member_required(login_url="hotel:login")
 def edit_manager(request, id):
     manager = Manager.objects.get(pk=id)
     if request.method == "POST":
@@ -331,7 +331,7 @@ def edit_manager(request, id):
     )
 
 
-@staff_member_required
+@staff_member_required(login_url="hotel:login")
 def remove_manager(request, id):
     manager = Manager.objects.get(pk=id)
     u = User.objects.get(username=manager.username)
@@ -340,6 +340,6 @@ def remove_manager(request, id):
     return redirect("booking:managers")
 
 
-@superuser_required
+@superuser_required(login_url="hotel:login")
 def dashboard(request):
     return render(request, "dashboard.html")
