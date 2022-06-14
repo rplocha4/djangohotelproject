@@ -62,9 +62,14 @@
           <i class="fa-solid fa-check"></i> Available
 
           <br>
-          <i class="fa-solid fa-bed"></i>&nbsp{{room.room_type.beds}} beds
+          <i class="fa-solid fa-bed"></i>&nbsp{{room.room_type.beds}}
+          {%if room.room_type.beds == '1' %}
+          bed
+          {%else%}
+          beds
+          {%endif%}
           <br>
-          <i class="bi bi-aspect-ratio"></i>&nbsp {{room.size}}m^2
+          <i class="bi bi-aspect-ratio"></i>&nbsp {{room.size}}m&#178;
 
           <br>
           <i class="fa-duotone fa-plus"></i> &nbsp{{room.accesories}}
@@ -74,9 +79,15 @@
           ${{room.room_type.price}}
           <br>
           {% if not user.is_superuser and not user.is_staff %}
+          {% if user.is_authenticated%}
           <a class="booking-room btn btn-success" style="width:130px;margin-top:10px"
             href="{% url 'booking:book_rooms' room.id %}">Book
             Room</a>
+          {% else %}
+          <a class="booking-room btn btn-success" style="width:130px;margin-top:10px"
+            href="{% url 'hotel:login'%}">Login to Book Room</a>
+          {%endif%}
+
           {%endif%}
           <br>
           {% if user.is_superuser or user.is_staff %}
@@ -100,15 +111,20 @@
         </div>
         <div class="content" style="width:400px;">
 
-          <p class="room-name">{{room.name}}</p>
+          <p class="room-name">{{booking.room.name}}</p>
 
 
           <i class="fa-duotone fa-x"></i> Not available untill {{booking.date_to}}
 
           <br>
-          <i class="fa-solid fa-bed"></i>&nbsp{{booking.room.room_type.beds}} beds
+          <i class="fa-solid fa-bed"></i>&nbsp{{booking.room.room_type.beds}}
+          {%if booking.room.room_type.beds == '1' %}
+          bed
+          {%else%}
+          beds
+          {%endif%}
           <br>
-          <i class="bi bi-aspect-ratio"></i>&nbsp {{booking.room.size}}m^2
+          <i class="bi bi-aspect-ratio"></i>&nbsp {{booking.room.size}}m&#178;
 
           <br>
           <i class="fa-duotone fa-plus"></i> &nbsp{{booking.room.accesories}}
@@ -118,9 +134,15 @@
           ${{booking.room.room_type.price}}
           <br>
           {% if not user.is_superuser and not user.is_staff %}
+
+          {% if user.is_authenticated%}
           <a class="booking-room btn btn-success"
             style="width:130px;pointer-events: none;cursor: default; opacity: .6; margin-top:10px"
             href="{% url 'booking:book_rooms' booking.room.id %}">Book Room</a>
+          {% else %}
+          <a class="booking-room btn btn-success" style="width:130px;margin-top:10px"
+            href="{% url 'hotel:login'%}">Login to Book Room</a>
+          {%endif%}
           {%endif%}
           <br>
           {% if user.is_superuser or user.is_staff %}
@@ -148,8 +170,29 @@
   </div>
 
   <div class="footer">
+    <div class="footer-box">
+      <h1>Phone Support</h1>
+      <p>24 hours a day</p>
+      <h2>+01 234 567 890</h2>
+    </div>
+    <div class="footer-box" style=text-align:center;>
+      <h1>Follow Us</h1>
+      <p>SOCIAL MEDIA CHANNELS</p>
+      <a class="btn btn-primary socialmedia" href="#!" role="button"><i class="fab fa-facebook-f"></i></a>
+      <a class="btn btn-primary socialmedia" href="#!" role="button"><i class="fab fa-twitter"></i></a>
+
+      <a class="btn btn-primary socialmedia" href="#!" role="button"><i class="fab fa-instagram"></i></a>
+      <a class="btn btn-primary" style="background-color: #3b5998;" href="#!" role="button"><i
+          class="fab fa-youtube"></i></a>
 
 
+    </div>
+    <div class="footer-box">
+      <h1>Our Newsletter</h1>
+      <p>SIGN UP FOR SPECIAL OFFERS</p>
+      <input class="newsletter-email" type="email" name="" id="" placeholder="E-mail">
+      <button class="subscribe-btn">Subscribe</button>
+    </div>
   </div>
 
 </div>

@@ -1,0 +1,25 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Django - Registration/Login App Password Reset
+From: webmaster@localhost
+To: radekplocha@gmail.com
+Date: Tue, 14 Jun 2022 17:51:34 -0000
+Message-ID: <165522909450.24084.15163805852377176617@LAPTOP-2RCPL59T>
+
+
+You're receiving this email because you requested a password reset for your user account at 127.0.0.1:8000.
+
+Please go to the following page and choose a new password:
+
+http://127.0.0.1:8000/accounts/reset/MjM/b70xty-3fcafcc394b751b9e0144eeecf6ec11e/
+
+Your username, in case you’ve forgotten: rplocha
+
+Thanks for using our site!
+
+The 127.0.0.1:8000 team
+
+
+
+-------------------------------------------------------------------------------

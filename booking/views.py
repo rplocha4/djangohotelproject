@@ -322,7 +322,7 @@ def edit_manager(request, id):
         form = EditCustomer(request.POST, instance=manager)
         if form.is_valid():
             form.save()
-            return redirect("booking:customers")
+            return redirect("booking:managers")
     else:
         form = EditCustomer(instance=manager)
 

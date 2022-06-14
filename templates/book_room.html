@@ -11,15 +11,20 @@
 
 <form action="{% url 'booking:book_rooms' room.id %}" method="post">
     {% csrf_token %}
-
     <div class="booking_box">
-        {{form.as_p}}
-        {{ form.media }}
+        <div>
+            <h1>{{room.name}}</h1>
+            <h2>${{room.room_type.price}} per night</h2>
+        </div>
+        <div>
+            {{form.as_p}}
+            {{ form.media }}
+        </div>
+
 
         <input class="btn btn-primary" style="margin-bottom: 20px;" type="submit" value="Submit">
 
     </div>
-
 
 </form>
 

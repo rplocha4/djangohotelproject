@@ -17,8 +17,6 @@ class AddRoom(ModelForm):
 
 
 class EditCustomer(ModelForm):
-    phone_number = PhoneNumberField(widget=PhoneNumberPrefixWidget())
-
     class Meta:
         model = Customer
         fields = ["first_name", "last_name", "email", "phone_number"]
